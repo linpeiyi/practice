@@ -1,0 +1,27 @@
+#include <stdio.h>
+int main()
+{
+    int a[20];
+    int i,j,A=0,B=0,C=0;// A是最后要输出的重数  B是记录第几个数为众数
+    int n;                                           //C是当前的数的个数
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);       //接收用户输入
+    }
+    for(C=0,i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)   //比较相等的
+        {
+            if(a[j]==a[i])
+                C++;
+        }
+        if(C>A)  //将其数量和之前的数量相比，大的话交换，小的话不变
+        {
+            A=C;
+            B=i;        //记录数低级个数这么多
+        }
+    }
+    printf(众数是："%d\n重数是：%d",a[B],A);
+    return 0;
+}
