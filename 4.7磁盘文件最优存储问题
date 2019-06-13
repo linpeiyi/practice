@@ -1,0 +1,48 @@
+#include"stdio.h"
+#define MAX 100//一个上限的最大值为一百
+void sort(float *a,int n) //定义单精度的数组a[ ]和整型n,n是文件的个数
+{
+int i,j;//定义整型的i和j
+double temp;
+for(i=0;i<n-1;i++)
+{
+for(j=0;j<n-1-i;j++)
+{
+if(a[j]>a[j+1])
+{
+temp=a[j];
+a[j]=a[j+1];
+a[j+1]=temp;
+}
+}
+}
+}
+void main()
+{
+int i,j,n,k;
+float a[MAX],x[MAX];
+float m=0,t=0;
+printf("请输入文件数：\n");
+scanf("%d",&n);
+printf("请分别输入这些文件的检索概率：\n");
+for(i=0;i<n;i++)
+scanf("%f",&a[i]);
+sort(a,n);
+k=(n-1)/2;
+x[k]=a[n-1];
+
+for(i=k+1;i<n;i++) 
+x[i]=a[n-2*(i-k)];
+
+for(i=k-1;i>=0;i--)
+x[i]=a[n-2*(k-i)-1];
+
+for(i=0;i<n;i++)
+{
+m=m+a[i];
+for(j=i+1;j<n;j++)
+t+=x[i]*x[j]*(j-i);
+}
+t=t/(m*m);
+printf("经过合理的安排之后，最少期望检索为:%f \n",t);
+}
