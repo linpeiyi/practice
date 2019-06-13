@@ -1,50 +1,51 @@
-public class zhengxingbianhuan{
-	    static int m;
-	     static int count1,count2;//当前变换次数count1，最佳变换次数count2
-	     static int[] temp1=new int[100];//回溯法进行变换，并且规定变换次数100次
-	      static  int[] temp2=new int[100];
-	    public static void main(String args[]){
-	        Scanner input=new Scanner(System.in);
-	        System.out.println("输入需要变换的整数为");
-	        int n=input.nextInt();
-	        System.out.println("输入需要变换后的整数为");
-	        m=input.nextInt();
-	        count1=0;
-	        count2=100;
-	        Transform(n);
-	        System.out.println("输出变换次数count1为");
-	        System.out.println(count1);
-	        for(int i=count2;i>=1;i--){
-	            if(temp2[i]==2)System.out.print("f");
-	            if(temp2[i]==1)System.out.print("g");
-	        }
-	    }
-	
-	    public static void Transform(int t){
-	        if(t==m){//交换需要变换的数字
-	            if(count1<count2){
-	                count2=count1;//把转换次数少的赋值给count2
-	                for(int i=1;i<=count2;i++){
-	                    temp2[i]=temp1[i];//temp2存储转换少的次数
-	                    }
-	                }
-	            return ;
-	    }
-	
-	    int temp=t/2;
-	    count1++;
-	    if(count1<count2&& t>0){
-	        temp1[count1]=1;//调用方法g并且赋值为1
-	        Transform(temp);
-	    }
-	    count1--;//进行回溯
-	
-	    temp=3*t;
-	    count1++;
-	    if(count1<count2){
-	        temp1[count1]=2;//调用方法f并且赋值为2
-	        Transform(temp);
-	    }
-	    count1--;//回溯
-	    }
-	    }
+import java.util.Scanner;
+public class zhengshubianhuan{
+    static int m;
+     static int count1,count2;//当前变换次数count1，最佳变换次数count2
+     static int[] temp1=new int[100];//回溯法进行变换，并且规定变换次数100次
+      static  int[] temp2=new int[100];
+    public static void main(String args[]){
+        Scanner input=new Scanner(System.in);
+        System.out.println("输入需要变换的整数为");
+        int n=input.nextInt();
+        System.out.println("输入需要变换后的整数为");
+        m=input.nextInt();
+        count1=0;
+        count2=100;
+        Transform(n);
+        System.out.println("输出变换次数count1为");
+        System.out.println(count1);
+        for(int i=count2;i>=1;i--){
+            if(temp2[i]==2)System.out.print("f");
+            if(temp2[i]==1)System.out.print("g");
+        }
+    }
+ 
+    public static void Transform(int t){
+        if(t==m){//交换需要变换的数字
+            if(count1<count2){
+                count2=count1;//把转换次数少的赋值给count2
+                for(int i=1;i<=count2;i++){
+                    temp2[i]=temp1[i];//temp2存储转换少的次数
+                    }
+                }
+            return ;
+    }
+ 
+    int temp=t/2;
+    count1++;
+    if(count1<count2&& t>0){
+        temp1[count1]=1;//调用方法g并且赋值为1
+        Transform(temp);
+    }
+    count1--;//进行回溯
+         
+    temp=3*t;
+    count1++;
+    if(count1<count2){
+        temp1[count1]=2;//调用方法f并且赋值为2
+        Transform(temp);
+    }
+    count1--;//回溯
+    }
+    }
