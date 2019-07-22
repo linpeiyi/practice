@@ -1,0 +1,63 @@
+#include<stdio.h>
+int n;    //代表给定的物品个数
+int m;   //代表属性约束的个数
+int p[100];    //代表属性约束的上限值
+double v[100];  //代表物品价值的数组
+int a[100][100];  //代表约束物品属性的数组
+double pv;   //代表目前背包的价值
+double maxv;//代表所求的最大价值
+void getBest(int i)//求最优解的函数
+{
+	int j;
+    if(i>=n)//判断目前是否到达根节点
+    {
+        if(pv>maxv)//如果目前背包的价值大于目前的最大价值，则交换
+            maxv=pv;
+        return;
+    }
+	int count=0;//定义整型count用于判断约束条件成立的计数器
+	for(j=0;j<m;j++)//用于遍历m个属性
+	{
+		if(p[j]-a[j][i]>=0)
+		{
+			count++;//代表一个属性约束成立，则计数器就加1
+		}
+		 else break;//当某个属性不满足约束条件时,即(p[j]-a[j][i]<0)，就跳出循环停止遍历
+	}
+		if(count==m)//这里代表m个属性的约束同时成立，进入右子树（代表该物品可以放入背包内）
+		{
+			for(j=0;j<m;j++)//再遍历m个属性
+			{
+				p[j]-=a[j][i];//放入物品后，相应的m个属性上限值要减少
+			}
+			pv+=v[i]; 
+			getBest(i+1);
+			for(j=0;j<m;j++)//遍历m个属性
+			{
+				p[j]+=a[j][i];//回溯到上一个节点，相当于把物品拿出来，所以相应的m个属性值上限增加
+			}
+			pv-=v[i];//释放拿出物品的价值
+		}
+		getBest(i+1);//进入左子树，就是不满足属性约束（不把该物品放入背包）
+}
+void main()
+{
+	int i,j;
+	printf("请输入物品的个数及属性约束的个数：\n");
+    scanf("%d%d",&n,&m);
+
+	printf("输入这%d个物品的价值：\n",n);
+	for(i=0;i<n;i++)
+		scanf("%lf",&v[i]);
+	printf("输入这%d个物品的属性约束值的数组：\n",n);
+	for(j=0;j<m;j++){
+		for(i=0;i<n;i++){
+			scanf("%d",&a[j][i]);
+		}
+	}
+	printf("输入这%d个属性约束的上限值：\n",m);
+	for(j=0;j<m;j++)
+	scanf("%d",&p[j]);
+    getBest(0);
+    printf("最后所得的最大价值为：%lf\n",maxv);
+}
